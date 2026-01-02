@@ -93,10 +93,11 @@
 
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .step-title { color: var(--secondary); font-weight: bold; margin-top: 15px; display: block; }
+        .step-title { color: var(--secondary); font-weight: bold; margin-top: 15px; display: block; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+        .logic-highlight { color: #c2410c; font-weight: bold; }
         
-        .canvas-container { text-align: center; margin: 20px 0; background: white; border-radius: 8px; }
-        canvas { max-width: 100%; height: auto; border: 1px solid #eee; }
+        .canvas-container { text-align: center; margin: 20px 0; background: white; border-radius: 8px; padding: 10px; }
+        canvas { max-width: 100%; height: auto; border: 1px solid #cbd5e1; border-radius: 4px; }
 
         .footer { text-align: center; margin-top: 50px; color: #94a3b8; font-size: 0.85rem; }
     </style>
@@ -121,25 +122,30 @@
             <button class="toggle-btn btn-ans" onclick="toggle('ans1', drawGraph)">✅ 深度解析</button>
         </div>
         <div id="hint1" class="content-box">
-            <span class="step-title">1. 如何作图？</span> 将 \(k=3\) 代入后，得到两个确定的函数。回想“两点法”：找直线与坐标轴的交点最方便。<br>
-            <span class="step-title">2. “无解”在图象上意味着什么？</span> 方程组的解是交点。无解即没有交点。在同一平面内，什么样的两条直线永不相交？
+            <span class="step-title">思维点拨</span>
+            1. <span class="logic-highlight">作图策略</span>：对于一次函数，找它与 \(x\) 轴和 \(y\) 轴的交点（即截距点）绘图最为规范。<br>
+            2. <span class="logic-highlight">几何转换</span>：方程组的解对应图象的交点。若“无解”，意味着在同一平面内，两条直线平行（无公共点）。
         </div>
         <div id="ans1" class="content-box">
-            <span class="step-title">第一问：图象法寻解</span>
+            <span class="step-title">第一问：图象寻踪</span>
             当 \(k=3\) 时，方程组为：
             \[\begin{cases} L_1: y = 2x + 4 \\ L_2: y = -x + 3 \end{cases}\]
-            在坐标系中画出直线（见下图）。观察发现两直线交于点 \(A\)。通过联立方程 \(2x+4 = -x+3\) 解得 \(x=-\frac{1}{3}\)，代入得 \(y=\frac{10}{3}\)。<br>
-            <b>结论：</b>解为 \(\begin{cases} x = -\frac{1}{3} \\ y = \frac{10}{3} \end{cases}\)。
+            <b>作图过程：</b><br>
+            对于 \(L_1\)：当 \(x=0\) 时 \(y=4\)，当 \(y=0\) 时 \(x=-2\)，过点 \((0, 4)\) 和 \((-2, 0)\)；<br>
+            对于 \(L_2\)：当 \(x=0\) 时 \(y=3\)，当 \(y=0\) 时 \(x=3\)，过点 \((0, 3)\) 和 \((3, 0)\)。<br>
+            观察图象，两线交于点 \(A\)。联立方程求解：\(2x + 4 = -x + 3 \Rightarrow 3x = -1 \Rightarrow x = -\frac{1}{3}\)。代入得 \(y = \frac{10}{3}\)。<br>
+            <span class="logic-highlight">结论：</span>方程组的解为 \(\begin{cases} x = -\frac{1}{3} \\ y = \frac{10}{3} \end{cases}\)。
             
             <div class="canvas-container">
                 <canvas id="mathCanvas" width="400" height="400"></canvas>
             </div>
 
-            <span class="step-title">第二问：参数探究</span>
-            方程组无解 \(\Leftrightarrow\) 两直线平行 \(\Leftrightarrow\) 斜率相等且截距不等。<br>
+            <span class="step-title">第二问：无解探究</span>
+            在平面内，方程组无解意味着两条直线平行。<br>
+            由一次函数性质知，若两直线平行，则 <span class="logic-highlight">斜率相等且截距不等</span>。<br>
             \(L_1\) 的斜率为 \(k-1\)，\(L_2\) 的斜率为 \(-1\)。<br>
-            令 \(k-1 = -1\)，得 \(k = 0\)。<br>
-            此时 \(L_1: y = -x + 4\)，\(L_2: y = -x\)。斜率相同均为 \(-1\)，截距 \(4 \neq 0\)，满足平行条件。
+            令 \(k-1 = -1\)，解得 <span class="logic-highlight">\(k = 0\)</span>。<br>
+            此时，\(L_1: y = -x + 4\)，\(L_2: y = -x\)。斜率均为 \(-1\)，截距分别为 \(4\) 和 \(0\)，故两直线平行，方程组无解。
         </div>
     </div>
 
@@ -155,20 +161,25 @@
             <button class="toggle-btn btn-ans" onclick="toggle('ans2')">✅ 深度解析</button>
         </div>
         <div id="hint2" class="content-box">
-            <span class="step-title">1. 突破口在哪里？</span> 方程(1)系数巨大，直接代入很麻烦。观察方程(2)，绝对值和算术平方根有什么共同特征？<br>
-            <span class="step-title">2. 观察待求式：</span> 分子部分的 \(x^2-16x\) 和 \(y^2-4y\) 让你联想到了哪个公式？
+            <span class="step-title">思维点拨</span>
+            1. <span class="logic-highlight">关键突破</span>：观察第二个方程。由于绝对值和算术平方根均具有非负性，它们的和为 \(0\) 蕴含着极强的条件。<br>
+            2. <span class="logic-highlight">构造法</span>：通过配方法，将复杂的待求式分子转化为包含 \((x-8)\) 和 \((y-2)\) 的结构。
         </div>
         <div id="ans2" class="content-box">
-            <span class="step-title">第一步：锁定未知数</span>
-            由非负数性质知：\(|x - 8| \ge 0\) 且 \(\sqrt{y - 2} \ge 0\)。<br>
-            若两个非负数之和为 \(0\)，则它们必须同时为 \(0\)。<br>
-            故 \(x - 8 = 0 \Rightarrow x = 8\)；\(y - 2 = 0 \Rightarrow y = 2\)。<br>
-            （验证：将 \(x=8, y=2\) 代入方程(1)，\(0+0=0\) 成立。）
+            <span class="step-title">步骤一：利用非负性求值</span>
+            因为 \(|x - 8| \ge 0\) 且 \(\sqrt{y - 2} \ge 0\)，若两者之和为 \(0\)，则每一项必须均为 \(0\)。<br>
+            由此得：\(x - 8 = 0 \Rightarrow x = 8\)，且 \(y - 2 = 0 \Rightarrow y = 2\)。<br>
+            将结果代入方程(1)验证：\(2024 \times 0 + 2025 \times 0 = 0\)，符合题意。
             
-            <span class="step-title">第二步：巧用整体思想</span>
-            观察待求式分子：\(x^2 - 16x + y^2 - 4y + 68\)。<br>
-            利用配方法变形：\((x^2 - 16x + 64) + (y^2 - 4y + 4) = (x - 8)^2 + (y - 2)^2\)。<br>
-            将 \(x=8, y=2\) 代入整体：\(\frac{0^2 + 0^2}{8 \times 2} = 0\)。
+            <span class="step-title">步骤二：巧用整体配方</span>
+            待求式分子为：\(x^2 - 16x + y^2 - 4y + 68\)<br>
+            利用完全平方公式进行配方：<br>
+            \((x^2 - 2 \cdot 8x + 8^2) + (y^2 - 2 \cdot 2y + 2^2) = (x - 8)^2 + (y - 2)^2\)<br>
+            核算常数项：\(64 + 4 = 68\)，恰好等于分子中的常数。
+            
+            <span class="step-title">步骤三：整体代入求解</span>
+            将 \(x=8, y=2\) 代入配方后的式子：<br>
+            原式 = \(\frac{(8 - 8)^2 + (2 - 2)^2}{8 \times 2} = \frac{0}{16} = \mathbf{0}\)。
         </div>
     </div>
 
@@ -183,46 +194,55 @@
             <button class="toggle-btn btn-ans" onclick="toggle('ans3')">✅ 深度解析</button>
         </div>
         <div id="hint3" class="content-box">
-            <span class="step-title">1. 结构化识别：</span> 这个方程组看起来很“重”，因为未知数在分母上。但观察两个方程，分母的结构是不是完全一样？<br>
-            <span class="step-title">2. 简化策略：</span> 如果我们把那两个复杂的分式分别看成一个整体 \(u\) 和 \(v\)，是不是就变成了最基础的二元一次方程组？
+            <span class="step-title">思维点拨</span>
+            <span class="logic-highlight">换元降阶</span>：当未知数出现在分母且结构重复时，使用换元法可以避开繁琐的分式化简。
         </div>
         <div id="ans3" class="content-box">
-            <span class="step-title">第一步：整体换元</span>
-            设 \(u = \frac{1}{x+y-2}\)，\(v = \frac{1}{x-y+6}\)。<br>
-            原方程组变为：\(\begin{cases} 3u + 4v = 2 \quad \text{---(1)} \\ 9u - 8v = -1 \quad \text{---(2)} \end{cases}\)<br>
-            由 \((1) \times 2 + (2)\) 得：\(15u = 3 \Rightarrow u = \frac{1}{5}\)。<br>
-            代入得：\(3(\frac{1}{5}) + 4v = 2 \Rightarrow 4v = \frac{7}{5} \Rightarrow v = \frac{7}{20}\)。
-
-            <span class="step-title">第二步：还原求解</span>
-            由换元定义得：\(\begin{cases} x + y - 2 = 5 \\ x - y + 6 = \frac{20}{7} \end{cases} \Rightarrow \begin{cases} x + y = 7 \\ x - y = -\frac{22}{7} \end{cases}\)<br>
-            解得：\(x = \frac{27}{14}, y = \frac{71}{14}\)。
+            <span class="step-title">步骤一：设元与转化</span>
+            设 \(u = \frac{1}{x + y - 2}\)，\(v = \frac{1}{x - y + 6}\)。<br>
+            原方程组转化为：
+            \[\begin{cases} 3u + 4v = 2 \quad (1) \\ 9u - 8v = -1 \quad (2) \end{cases}\]
+            
+            <span class="step-title">步骤二：求解辅助方程组</span>
+            利用加减消元法，\((1) \times 2 + (2)\) 得：<br>
+            \(15u = 3 \Rightarrow u = \frac{1}{5}\)；<br>
+            将 \(u = \frac{1}{5}\) 代入 (1) 得：\(3 \cdot \frac{1}{5} + 4v = 2 \Rightarrow 4v = \frac{7}{5} \Rightarrow v = \frac{7}{20}\)。
+            
+            <span class="step-title">步骤三：回代解原方程</span>
+            根据设元关系：<br>
+            \(\begin{cases} x + y - 2 = 5 \\ x - y + 6 = \frac{20}{7} \end{cases} \Rightarrow \begin{cases} x + y = 7 \\ x - y = -\frac{22}{7} \end{cases}\)<br>
+            联立求解得：<span class="logic-highlight">\(x = \frac{27}{14}, y = \frac{71}{14}\)</span>。
         </div>
     </div>
 
     <div class="homework-card">
-        <div class="card-title">第四关：消元思想 | 寻找最优算法</div>
+        <div class="card-title">第四关：消元思想 | 最优算法</div>
         <div class="question">
             解方程组：
-            \[\begin{cases} 2023x + 2025y = 20232 \\ 2025x + 2023y = 20216 \end{cases}\]
+            \[\begin{cases} 2023x + 2025y = 20242 \\ 2025x + 2023y = 20238 \end{cases}\]
         </div>
         <div class="btn-group">
             <button class="toggle-btn btn-hint" onclick="toggle('hint4')">💡 引导思考</button>
             <button class="toggle-btn btn-ans" onclick="toggle('ans4')">✅ 深度解析</button>
         </div>
         <div id="hint4" class="content-box">
-            <span class="step-title">1. 算法评估：</span> 传统的代入消元法面对 2023 这样的系数会产生巨大的计算量。AI 虽然算得快，但我们有更聪明的办法吗？<br>
-            <span class="step-title">2. 系数特征：</span> 发现没有？\(x\) 和 \(y\) 的系数是交叉对称的。试试“整体加减”？
+            <span class="step-title">思维点拨</span>
+            <span class="logic-highlight">系数特征</span>：观察到 \(x, y\) 系数交叉相等（对称性）。对于这类方程组，利用“和差变换”是最优路径。
         </div>
         <div id="ans4" class="content-box">
-            <span class="step-title">第一步：和差变换</span>
+            <span class="step-title">步骤一：和差降维</span>
             设方程为 (1) 和 (2)。<br>
-            \((1) + (2)\) 得：\(4048x + 4048y = 40448 \Rightarrow x + y = 10 \quad \text{---(3)}\)<br>
-            \((2) - (1)\) 得：\(2x - 2y = -16 \Rightarrow x - y = -8 \quad \text{---(4)}\)
-            
-            <span class="step-title">第二步：极速求解</span>
+            1. <span class="logic-highlight">相加得和式</span> \((1) + (2)\)：<br>
+            \((2023 + 2025)x + (2025 + 2023)y = 20242 + 20238\)<br>
+            \(4048x + 4048y = 40480 \Rightarrow \mathbf{x + y = 10 \quad (3)}\)<br><br>
+            2. <span class="logic-highlight">相减得差式</span> \((2) - (1)\)：<br>
+            \((2025 - 2023)x + (2023 - 2025)y = 20238 - 20242\)<br>
+            \(2x - 2y = -4 \Rightarrow \mathbf{x - y = -2 \quad (4)}\)
+
+            <span class="step-title">步骤二：联立极简方程组</span>
             联立 (3) 和 (4)：
-            \[\begin{cases} x + y = 10 \\ x - y = -8 \end{cases}\]
-            心算可得：\(x=1, y=9\)。这种利用对称性消元的方法比常规暴力计算快了数倍。
+            \[\begin{cases} x + y = 10 \\ x - y = -2 \end{cases}\]
+            解得：<span class="logic-highlight">\(x = 4, y = 6\)</span>。
         </div>
     </div>
 
@@ -248,48 +268,65 @@
 
         ctx.clearRect(0, 0, w, h);
         
-        // 坐标轴
-        ctx.strokeStyle = '#94a3b8';
+        // 1. 绘制网格
+        ctx.strokeStyle = '#f1f5f9';
         ctx.lineWidth = 1;
+        for(let i = 0; i <= w; i += s) {
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke();
+        }
+
+        // 2. 绘制坐标轴
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(0, oy); ctx.lineTo(w, oy); 
-        ctx.moveTo(ox, 0); ctx.lineTo(ox, h); 
+        // X轴
+        ctx.moveTo(10, oy); ctx.lineTo(w-10, oy); 
+        ctx.lineTo(w-20, oy-5); ctx.moveTo(w-10, oy); ctx.lineTo(w-20, oy+5);
+        // Y轴
+        ctx.moveTo(ox, h-10); ctx.lineTo(ox, 10);
+        ctx.lineTo(ox-5, 20); ctx.moveTo(ox, 10); ctx.lineTo(ox+5, 20);
         ctx.stroke();
 
-        // 刻度
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '10px Arial';
+        // 3. 绘制整数刻度和数字
+        ctx.fillStyle = '#64748b';
+        ctx.font = '12px Arial';
+        ctx.fillText('x', w-15, oy+15);
+        ctx.fillText('y', ox-15, 15);
+        ctx.fillText('O', ox-15, oy+15);
+
         for(let i = -4; i <= 4; i++) {
             if(i !== 0) {
-                ctx.fillText(i, ox + i*s - 3, oy + 12);
-                ctx.fillText(i, ox - 12, oy - i*s + 3);
+                // X轴刻度
+                ctx.beginPath(); ctx.moveTo(ox+i*s, oy-3); ctx.lineTo(ox+i*s, oy+3); ctx.stroke();
+                ctx.fillText(i, ox+i*s-5, oy+15);
+                // Y轴刻度
+                ctx.beginPath(); ctx.moveTo(ox-3, oy-i*s); ctx.lineTo(ox+3, oy-i*s); ctx.stroke();
+                ctx.fillText(i, ox-18, oy-i*s+5);
             }
         }
 
-        // L1: y = 2x + 4
+        // 4. 绘制直线 L1: y = 2x + 4 (过-2,0 和 0,4)
         ctx.strokeStyle = '#ef4444';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(ox + (-3)*s, oy - (-2)*s);
-        ctx.lineTo(ox + (1)*s, oy - (6)*s);
+        ctx.moveTo(ox - 3*s, oy - (-2)*s); ctx.lineTo(ox + 1*s, oy - 6*s);
         ctx.stroke();
 
-        // L2: y = -x + 3
+        // 5. 绘制直线 L2: y = -x + 3 (过3,0 和 0,3)
         ctx.strokeStyle = '#3b82f6';
         ctx.beginPath();
-        ctx.moveTo(ox + (-1)*s, oy - (4)*s);
-        ctx.lineTo(ox + (4)*s, oy - (-1)*s);
+        ctx.moveTo(ox - 1*s, oy - 4*s); ctx.lineTo(ox + 4*s, oy - (-1)*s);
         ctx.stroke();
 
-        // 交点 A
+        // 6. 标记交点 A
         const ix = -1/3, iy = 10/3;
         ctx.fillStyle = '#1e293b';
         ctx.beginPath();
-        ctx.arc(ox + ix*s, oy - iy*s, 5, 0, Math.PI*2);
+        ctx.arc(ox + ix*s, oy - iy*s, 4, 0, Math.PI*2);
         ctx.fill();
-        
-        ctx.font = 'bold 14px "Times New Roman"';
-        ctx.fillText(`A( -1/3 , 10/3 )`, ox + ix*s + 10, oy - iy*s - 10);
+        ctx.font = 'bold 13px Times New Roman';
+        ctx.fillText('A(-1/3, 10/3)', ox + ix*s + 8, oy - iy*s - 8);
     }
 </script>
 
