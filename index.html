@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI作业助手 - 张老师数学课堂</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #3b82f6;
+            --success: #059669;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --accent: #f59e0b;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container { max-width: 850px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+        }
+
+        .homework-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-left: 6px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        .question { background: #fdfdfd; padding: 15px; border-radius: 8px; border: 1px solid #f1f5f9; }
+
+        .btn-group { display: flex; gap: 12px; margin: 20px 0; }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .btn-hint { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .btn-ans { background: #dcfce7; color: var(--success); border: 1px solid #bbf7d0; }
+        .toggle-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+        .content-box {
+            display: none;
+            padding: 25px;
+            background: #fcfdfd;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-top: 15px;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-title { color: var(--secondary); font-weight: bold; margin-top: 15px; display: block; }
+        
+        .canvas-container { text-align: center; margin: 20px 0; background: white; border-radius: 8px; }
+        canvas { max-width: 100%; height: auto; border: 1px solid #eee; }
+
+        .footer { text-align: center; margin-top: 50px; color: #94a3b8; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>AI 作业助手</h1>
+        <p>二元一次方程组思维复习 • 张老师数学课堂</p>
+    </header>
+
+    <div class="homework-card">
+        <div class="card-title">第一关：数形结合 | 动态交点</div>
+        <div class="question">
+            已知直线 \(L_1: y = (k - 1)x + 4\)，直线 \(L_2: y = -x + k\)。<br>
+            1. 当 \(k = 3\) 时，请通过图象法求出该方程组的解。<br>
+            2. <b>动态探究：</b>当参数 \(k\) 取何值时，该方程组无解？此时直线呈现怎样的位置关系？
+        </div>
+        <div class="btn-group">
+            <button class="toggle-btn btn-hint" onclick="toggle('hint1')">💡 引导思考</button>
+            <button class="toggle-btn btn-ans" onclick="toggle('ans1', drawGraph)">✅ 深度解析</button>
+        </div>
+        <div id="hint1" class="content-box">
+            <span class="step-title">1. 如何作图？</span> 将 \(k=3\) 代入后，得到两个确定的函数。回想“两点法”：找直线与坐标轴的交点最方便。<br>
+            <span class="step-title">2. “无解”在图象上意味着什么？</span> 方程组的解是交点。无解即没有交点。在同一平面内，什么样的两条直线永不相交？
+        </div>
+        <div id="ans1" class="content-box">
+            <span class="step-title">第一问：图象法寻解</span>
+            当 \(k=3\) 时，方程组为：
+            \[\begin{cases} L_1: y = 2x + 4 \\ L_2: y = -x + 3 \end{cases}\]
+            在坐标系中画出直线（见下图）。观察发现两直线交于点 \(A\)。通过联立方程 \(2x+4 = -x+3\) 解得 \(x=-\frac{1}{3}\)，代入得 \(y=\frac{10}{3}\)。<br>
+            <b>结论：</b>解为 \(\begin{cases} x = -\frac{1}{3} \\ y = \frac{10}{3} \end{cases}\)。
+            
+            <div class="canvas-container">
+                <canvas id="mathCanvas" width="400" height="400"></canvas>
+            </div>
+
+            <span class="step-title">第二问：参数探究</span>
+            方程组无解 \(\Leftrightarrow\) 两直线平行 \(\Leftrightarrow\) 斜率相等且截距不等。<br>
+            \(L_1\) 的斜率为 \(k-1\)，\(L_2\) 的斜率为 \(-1\)。<br>
+            令 \(k-1 = -1\)，得 \(k = 0\)。<br>
+            此时 \(L_1: y = -x + 4\)，\(L_2: y = -x\)。斜率相同均为 \(-1\)，截距 \(4 \neq 0\)，满足平行条件。
+        </div>
+    </div>
+
+    <div class="homework-card">
+        <div class="card-title">第二关：整体思想 | 非负性的力量</div>
+        <div class="question">
+            已知方程组：
+            \[\begin{cases} 2024(x - 8) + 2025(y - 2) = 0 \\ |x - 8| + \sqrt{y - 2} = 0 \end{cases}\]
+            请计算代数式 \(\frac{x^2 + y^2 - 16x - 4y + 68}{xy}\) 的值。
+        </div>
+        <div class="btn-group">
+            <button class="toggle-btn btn-hint" onclick="toggle('hint2')">💡 引导思考</button>
+            <button class="toggle-btn btn-ans" onclick="toggle('ans2')">✅ 深度解析</button>
+        </div>
+        <div id="hint2" class="content-box">
+            <span class="step-title">1. 突破口在哪里？</span> 方程(1)系数巨大，直接代入很麻烦。观察方程(2)，绝对值和算术平方根有什么共同特征？<br>
+            <span class="step-title">2. 观察待求式：</span> 分子部分的 \(x^2-16x\) 和 \(y^2-4y\) 让你联想到了哪个公式？
+        </div>
+        <div id="ans2" class="content-box">
+            <span class="step-title">第一步：锁定未知数</span>
+            由非负数性质知：\(|x - 8| \ge 0\) 且 \(\sqrt{y - 2} \ge 0\)。<br>
+            若两个非负数之和为 \(0\)，则它们必须同时为 \(0\)。<br>
+            故 \(x - 8 = 0 \Rightarrow x = 8\)；\(y - 2 = 0 \Rightarrow y = 2\)。<br>
+            （验证：将 \(x=8, y=2\) 代入方程(1)，\(0+0=0\) 成立。）
+            
+            <span class="step-title">第二步：巧用整体思想</span>
+            观察待求式分子：\(x^2 - 16x + y^2 - 4y + 68\)。<br>
+            利用配方法变形：\((x^2 - 16x + 64) + (y^2 - 4y + 4) = (x - 8)^2 + (y - 2)^2\)。<br>
+            将 \(x=8, y=2\) 代入整体：\(\frac{0^2 + 0^2}{8 \times 2} = 0\)。
+        </div>
+    </div>
+
+    <div class="homework-card">
+        <div class="card-title">第三关：换元思想 | 降维打击</div>
+        <div class="question">
+            解方程组：
+            \[\begin{cases} \frac{3}{x + y - 2} + \frac{4}{x - y + 6} = 2 \\ \frac{9}{x + y - 2} - \frac{8}{x - y + 6} = -1 \end{cases}\]
+        </div>
+        <div class="btn-group">
+            <button class="toggle-btn btn-hint" onclick="toggle('hint3')">💡 引导思考</button>
+            <button class="toggle-btn btn-ans" onclick="toggle('ans3')">✅ 深度解析</button>
+        </div>
+        <div id="hint3" class="content-box">
+            <span class="step-title">1. 结构化识别：</span> 这个方程组看起来很“重”，因为未知数在分母上。但观察两个方程，分母的结构是不是完全一样？<br>
+            <span class="step-title">2. 简化策略：</span> 如果我们把那两个复杂的分式分别看成一个整体 \(u\) 和 \(v\)，是不是就变成了最基础的二元一次方程组？
+        </div>
+        <div id="ans3" class="content-box">
+            <span class="step-title">第一步：整体换元</span>
+            设 \(u = \frac{1}{x+y-2}\)，\(v = \frac{1}{x-y+6}\)。<br>
+            原方程组变为：\(\begin{cases} 3u + 4v = 2 \quad \text{---(1)} \\ 9u - 8v = -1 \quad \text{---(2)} \end{cases}\)<br>
+            由 \((1) \times 2 + (2)\) 得：\(15u = 3 \Rightarrow u = \frac{1}{5}\)。<br>
+            代入得：\(3(\frac{1}{5}) + 4v = 2 \Rightarrow 4v = \frac{7}{5} \Rightarrow v = \frac{7}{20}\)。
+
+            <span class="step-title">第二步：还原求解</span>
+            由换元定义得：\(\begin{cases} x + y - 2 = 5 \\ x - y + 6 = \frac{20}{7} \end{cases} \Rightarrow \begin{cases} x + y = 7 \\ x - y = -\frac{22}{7} \end{cases}\)<br>
+            解得：\(x = \frac{27}{14}, y = \frac{71}{14}\)。
+        </div>
+    </div>
+
+    <div class="homework-card">
+        <div class="card-title">第四关：消元思想 | 寻找最优算法</div>
+        <div class="question">
+            解方程组：
+            \[\begin{cases} 2023x + 2025y = 20232 \\ 2025x + 2023y = 20216 \end{cases}\]
+        </div>
+        <div class="btn-group">
+            <button class="toggle-btn btn-hint" onclick="toggle('hint4')">💡 引导思考</button>
+            <button class="toggle-btn btn-ans" onclick="toggle('ans4')">✅ 深度解析</button>
+        </div>
+        <div id="hint4" class="content-box">
+            <span class="step-title">1. 算法评估：</span> 传统的代入消元法面对 2023 这样的系数会产生巨大的计算量。AI 虽然算得快，但我们有更聪明的办法吗？<br>
+            <span class="step-title">2. 系数特征：</span> 发现没有？\(x\) 和 \(y\) 的系数是交叉对称的。试试“整体加减”？
+        </div>
+        <div id="ans4" class="content-box">
+            <span class="step-title">第一步：和差变换</span>
+            设方程为 (1) 和 (2)。<br>
+            \((1) + (2)\) 得：\(4048x + 4048y = 40448 \Rightarrow x + y = 10 \quad \text{---(3)}\)<br>
+            \((2) - (1)\) 得：\(2x - 2y = -16 \Rightarrow x - y = -8 \quad \text{---(4)}\)
+            
+            <span class="step-title">第二步：极速求解</span>
+            联立 (3) 和 (4)：
+            \[\begin{cases} x + y = 10 \\ x - y = -8 \end{cases}\]
+            心算可得：\(x=1, y=9\)。这种利用对称性消元的方法比常规暴力计算快了数倍。
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2024 张老师数学课堂 | 数学模型与 AI 算法综合练习
+    </div>
+</div>
+
+<script>
+    function toggle(id, callback) {
+        const el = document.getElementById(id);
+        const isHidden = el.style.display === 'none' || el.style.display === '';
+        el.style.display = isHidden ? 'block' : 'none';
+        if (isHidden && callback) callback();
+        if (isHidden && window.MathJax) MathJax.typesetPromise();
+    }
+
+    function drawGraph() {
+        const canvas = document.getElementById('mathCanvas');
+        const ctx = canvas.getContext('2d');
+        const w = 400, h = 400, s = 40; 
+        const ox = w/2, oy = h/2;
+
+        ctx.clearRect(0, 0, w, h);
+        
+        // 坐标轴
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, oy); ctx.lineTo(w, oy); 
+        ctx.moveTo(ox, 0); ctx.lineTo(ox, h); 
+        ctx.stroke();
+
+        // 刻度
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '10px Arial';
+        for(let i = -4; i <= 4; i++) {
+            if(i !== 0) {
+                ctx.fillText(i, ox + i*s - 3, oy + 12);
+                ctx.fillText(i, ox - 12, oy - i*s + 3);
+            }
+        }
+
+        // L1: y = 2x + 4
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(ox + (-3)*s, oy - (-2)*s);
+        ctx.lineTo(ox + (1)*s, oy - (6)*s);
+        ctx.stroke();
+
+        // L2: y = -x + 3
+        ctx.strokeStyle = '#3b82f6';
+        ctx.beginPath();
+        ctx.moveTo(ox + (-1)*s, oy - (4)*s);
+        ctx.lineTo(ox + (4)*s, oy - (-1)*s);
+        ctx.stroke();
+
+        // 交点 A
+        const ix = -1/3, iy = 10/3;
+        ctx.fillStyle = '#1e293b';
+        ctx.beginPath();
+        ctx.arc(ox + ix*s, oy - iy*s, 5, 0, Math.PI*2);
+        ctx.fill();
+        
+        ctx.font = 'bold 14px "Times New Roman"';
+        ctx.fillText(`A( -1/3 , 10/3 )`, ox + ix*s + 10, oy - iy*s - 10);
+    }
+</script>
+
+</body>
+</html>
